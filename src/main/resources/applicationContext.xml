@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	
+	<!-- you can use lazy-init for construct distance when a received request 
+		for create instance -->
+	<!-- <bean id="tv" class="polymorphism.SamsungTV" init-method="initMethod" 
+		destroy-method="destroyMethod" lazy-init="false" scope="singleton" p:speaker-ref="apple" 
+		p:price="2700000"> -->
+	<!-- for construct injection <constructor-arg ref="sony" index="0"></constructor-arg> 
+		<constructor-arg value="27000001" index="1"></constructor-arg> -->
+	<!-- for setter injection <property name="speaker" ref="apple"></property> 
+		<property name="price" value="270000"></property> -->
+	<!-- </bean> -->
+	<!-- <bean id="sony" class="polymorphism.SonySpeaker" lazy-init="false"></bean> -->
+	<bean id="apple" class="polymorphism.AppleSpeaker" lazy-init="false"></bean>
+
+	<context:component-scan base-package="com.springbook.biz">
+	</context:component-scan>
+			<!-- set aop using annotation -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- set aop using xml --> 
+	<aop:config>
+		<!-- 
+		<aop:pointcut id="allPointcut"
+			expression="execution(* com.springbook.biz..*Impl.*(..))" />
+		<aop:pointcut id="getPointcut"
+			expression="execution(* com.springbook.biz..*Impl.get*(..))" />
+		<aop:aspect ref="afterThrowing">
+			<aop:after-throwing pointcut-ref="getPointcut" method="exceptionLog" throwing="exception" />
+		</aop:aspect>
+		<aop:aspect ref="around">
+			<aop:around pointcut-ref="allPointcut" method="aroundLog" />
+		</aop:aspect>
+		 -->
+		<aop:pointcut id="txPointcut" expression="execution(* com.springbook.biz..*(..))" />
+		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
+	</aop:config>
+
+	<!-- for construct injection <bean id="userService" class="com.springbook.biz.user.impl.UserServiceImpl"> 
+		<property name="userDao" ref="userDao"></property> </bean> <bean id="userService" 
+		class="com.springbook.biz.user.impl.UserServiceImpl"> <constructor-arg ref="userDao"></constructor-arg> 
+		</bean> <bean id="userDao" class="com.springbook.biz.user.impl.UserDao"></bean> -->
+	<!-- below imported elements are inject beans configuration from other xml -->
+	<import resource="context-datasource.xml" />
+
+	<!-- set advice for pointcut 
+	<bean id="beforeAdvice" class="com.springbook.biz.common.BeforeAdvice"></bean>
+	<bean id="afterReturning" class="com.springbook.biz.common.AfterReturningAdvice"></bean>
+	<bean id="afterThrowing" class="com.springbook.biz.common.AfterThrowingAdvice"></bean>
+	<bean id="after" class="com.springbook.biz.common.AfterAdvice"></bean>
+	<bean id="around" class="com.springbook.biz.common.AroundAdvice"></bean>
+	<bean id="log" class="com.springbook.biz.common.LogAdvice"></bean>
+	-->
+	
+	<!-- Datasource 설정 -->
+	<context:property-placeholder location="classpath:config/database.properties" />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+							destroy-method="close">
+		<!--  for h2 
+		<property name="driverClassName" value="org.h2.Driver" />
+		-->
+		<!--  for oracle -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<!--  Spring JDBC 설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	 
+	<!-- Transaction 설정 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	
+
+</beans>
