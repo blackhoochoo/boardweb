@@ -17,6 +17,7 @@ import com.springbook.biz.board.BoardVo;
 // DAO(Data Access Object)
 @Repository("boardDaoSpring")
 public class BoardDAOSpring extends JdbcDaoSupport{
+	// jdbcTemplate
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	private final String BOARD_INSERT = "insert into board(seq, title, writer, " + 
