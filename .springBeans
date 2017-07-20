@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/context-datasource.xml</config>
 		<config>src/main/webapp/WEB-INF/config/presentation-layer.xml</config>
+		<config>src/main/webapp/WEB-INF/config/application-servlet.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
