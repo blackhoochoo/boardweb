@@ -58,19 +58,6 @@ public class BoardController {
 		return "getBoardList.do";
 	}
 
-	@RequestMapping("/getBoard.do")
-		public String getBoard(BoardVo vo, BoardDao boardDao, Model model) {
-			model.addAttribute("board", boardDao.getBoard(vo)); // Model ���� ����
-			return "getBoard.jsp";
-		}
-
-	@RequestMapping("/getBoardList.do")
-	public String getBoardList(
-			BoardVo vo, BoardDao boardDao, Model model) {
-		model.addAttribute("boardList", boardDao.getBoardList(vo));
-		return "getBoardList.jsp";
-	}
-
 	@ModelAttribute("conditionMap")
 	public Map<String, String> searchConditionMap() {
 		Map<String, String> conditionMap = new HashMap<String, String>();
@@ -79,17 +66,6 @@ public class BoardController {
 		return conditionMap;
 	}
 	
-	/*
-	@RequestMapping("/getBoardList.do")
-	public String getBoardList(@RequestParam(value="searchCondition",
-				defaultValue="TITLE", required=false) String condition,
-				@RequestParam(value="searchKeyword", defaultValue="", required=false)
-				String keyword, BoardVo vo, BoardDao boardDao, Model model) {
-		model.addAttribute("boardList", boardDao.getBoardList(vo));
-		return "getBoardList.jsp";
-	}
-	*/
-
 	@RequestMapping(value="/insertBoard.do")
 	public String insertBoard(BoardVo vo, BoardDao boardDao) throws IOException {
 		MultipartFile uploadFile = vo.getUploadFile();

@@ -1,31 +1,32 @@
 package com.springbook.view.board;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
 import com.springbook.biz.board.BoardVo;
 import com.springbook.biz.board.impl.BoardDao;
 
-public class GetBoardController  {
-	public ModelAndView getBoard(BoardVo board, BoardDao boardDao, ModelAndView mav) {
-/*		
-		String seq = request.getParameter("seq");
-		BoardDao boardDao = new BoardDao();
-		Board board = new Board();
-		board.setSeq(Integer.parseInt(seq));
-		board = boardDao.getBoard(board);
+public class GetBoardController implements Controller{
+	@Override
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("글 상세 조회 처리");
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("board", board);
+		// 1. 검색할 게시글 번호 추출
+		String seq = request.getParameter("seq");
+		
+		// 2. DB 연동 처리
+		BoardVo vo = new BoardVo();
+		vo.setSeq(Integer.parseInt(seq));
+		BoardDao boardDao = new BoardDao();
+		BoardVo board = boardDao.getBoard(vo);
+
+		// 3. 검색 결과와 화면 정보를 ModelAndView에 저장하여 리턴한다.
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("board", board);
-		mav.setViewName("getBoard");*/
-		
-		mav.addObject("board", boardDao.getBoard(board));
-		mav.setViewName("getBoard.jsp"); 
+		mav.setViewName("getBoard");
 		return mav;
 	}
 

@@ -28,7 +28,7 @@
 	<!-- <bean id="sony" class="polymorphism.SonySpeaker" lazy-init="false"></bean> -->
 	<bean id="apple" class="polymorphism.AppleSpeaker" lazy-init="false"></bean>
 
-	<context:component-scan base-package="com.springbook.biz">
+	<context:component-scan base-package="polymorphism">
 	</context:component-scan>
 			<!-- set aop using annotation -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

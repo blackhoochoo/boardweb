@@ -44,7 +44,7 @@
 <%-- <% for(Board doc : boardList) { %> --%>
 <c:forEach items="${boardList }" var="doc">
 <tr>
-	<td>${doc.seq }</td>
+	<td><a href="getBoard.do?seq=${doc.seq }">${doc.seq }</a></td>
 	<td><a href="getBoard.do?seq=${doc.seq }">${doc.title }</a></td>
 	<td>${doc.writer }</td>
 	<td><fmt:formatDate value="${doc.regdate }" pattern="yyyy-MM-dd"/></td>

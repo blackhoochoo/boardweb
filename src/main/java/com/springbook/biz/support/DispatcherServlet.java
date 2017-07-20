@@ -1,4 +1,4 @@
-package com.springbook.view.controller;
+package com.springbook.biz.support;
 
 import java.io.IOException;
 import java.util.List;
@@ -63,10 +63,6 @@ public class DispatcherServlet extends HttpServlet {
                    
 			response.sendRedirect("login.do");
 		} else if("/insertBoard.do".equals(path)) {
-			System.out.println("�� ��� ó��");
-			
-			// 1. ����� �Է� ���� ����
-
 			String title = request.getParameter("title");
 			String writer = request.getParameter("writer");
 			String content = request.getParameter("content");
@@ -75,11 +71,9 @@ public class DispatcherServlet extends HttpServlet {
 			board.setWriter(writer);
 			board.setContent(content);
 			
-			// 2. DB ���� ó��
 			BoardDao boardDao = new BoardDao();
 			boardDao.insertBoard(board);
 			
-			// 3. ȭ�� �׺���̼�
 			response.sendRedirect("getBoardList.do");
 		} else if("/updateBoard.do".equals(path)) {
 			System.out.println("�� ���� ó��");
@@ -123,8 +117,6 @@ public class DispatcherServlet extends HttpServlet {
 			session.setAttribute("board", board);
 			response.sendRedirect("getBoard.jsp");
 		} else if("/getBoardList.do".equals(path)) {
-			System.out.println("�� ��� �˻� ó��");
-			
 			BoardVo board = new BoardVo();
 			BoardDao boardDao = new BoardDao();
 			List<BoardVo> boardList = boardDao.getBoardList(board);

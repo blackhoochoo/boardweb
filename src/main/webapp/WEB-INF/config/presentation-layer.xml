@@ -12,7 +12,11 @@
 		http://www.springframework.org/schema/context 
 		http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	<!-- Controller 스캔 -->
+	<!-- 
 	<context:component-scan base-package="com.springbook.view"></context:component-scan>
+	 -->
+	 
+	 
 	
 	<!-- annotation 기반 예외 처리를 위한 설정 -->
 	<!-- json 변환기 사용시 HttpMessageConverter 생성을 위한 설정 -->
@@ -39,11 +43,8 @@
 	</bean>
 	
 	<!-- Handler Mapping 등록 -->
-	<!-- 
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-	-->
 		<!-- setter injection을 통한 Properties 의존성 주입 -->
-		<!-- 
 		<property name="mappings">
 			<props>
 				<prop key="/login.do">login</prop>
@@ -56,11 +57,9 @@
 			</props>
 		</property>
 	</bean>
-	 -->
 	
 	<!--  Controller 등록 -->
 	<!--  controller의 id값은 반드시 handler mapping 에 등록한 prop 값과 같은 값으로 해야 함 -->
-	<!-- 
 	<bean id="login" class="com.springbook.view.user.LoginController"></bean>
 	<bean id="getBoardList" class="com.springbook.view.board.GetBoardListController"></bean>
 	<bean id="getBoard" class="com.springbook.view.board.GetBoardController"></bean>
@@ -68,15 +67,12 @@
 	<bean id="updateBoard" class="com.springbook.view.board.UpdateBoardController"></bean>
 	<bean id="deleteBoard" class="com.springbook.view.board.DeleteBoardController"></bean>
 	<bean id="logout" class="com.springbook.view.user.LogoutController"></bean>
-	 -->
 	<!--  View Rersolver 등록 -->
-	<!-- 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/board/"></property>
 		<property name="suffix" value=".jsp"></property>
 		</bean>
-	 -->
 	 
 	 <!-- 다국어 설정. 'messageSource'라는 고정된 id 사용해야 함 -->
 	 <!--  MessageSource 등록 -->
