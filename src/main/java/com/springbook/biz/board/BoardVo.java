@@ -22,27 +22,29 @@ public class BoardVo {
 	private Date regdate;
 	private int cnt;
 	@XmlTransient
-	@JsonIgnore
 	private String searchCondition;
 	@XmlTransient
-	@JsonIgnore
 	private String searchKeyword;
 	@XmlTransient
-	@JsonIgnore
 	private MultipartFile uploadFile;
-	
+
+	@JsonIgnore
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+	
+	@JsonIgnore
 	public String getSearchCondition() {
 		return searchCondition;
 	}
 	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
 	}
+	
+	@JsonIgnore
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
@@ -88,7 +90,8 @@ public class BoardVo {
 	@Override
 	public String toString() {
 		return "BoardVo [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content + ", regdate="
-				+ regdate + ", cnt=" + cnt + "]";
+				+ regdate + ", cnt=" + cnt + ", searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword
+				+ ", uploadFile=" + uploadFile + "]";
 	}
 	
 }

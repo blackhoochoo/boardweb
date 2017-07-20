@@ -4,8 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-// XML 기반 예외처리를 위하여 ControllerAdvice 제외
-//@ControllerAdvice("com.springbook.view")
+@ControllerAdvice("com.springbook.view")
 public class CommonExceptionHandler {
 	@ExceptionHandler(ArithmeticException.class)
 	public ModelAndView handlerArthmeticException(Exception e) {

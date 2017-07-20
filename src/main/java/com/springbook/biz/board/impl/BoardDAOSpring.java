@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.springbook.biz.board.BoardVo;
 
 // DAO(Data Access Object)
-@Repository("boardDao")
+@Repository("boardDaoSpring")
 public class BoardDAOSpring extends JdbcDaoSupport{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -26,6 +26,10 @@ public class BoardDAOSpring extends JdbcDaoSupport{
 	private final String BOARD_DELETE = "delete board where seq=?";
 	private final String BOARD_GET = "select * from board where seq=?";
 	private final String BOARD_LIST = "select * from board order by seq desc";
+	private final String BOARD_LIST_SEARCH_BY_TITLE = 
+			"select * from board where title like '%'||?||'%' order by seq desc";
+	private final String BOARD_LIST_SEARCH_BY_CONTENT =
+			"select * from board where content like '%'||?||'%' order by seq desc";
 	
 	@Autowired
 	public void setSuperDataSource(DataSource dataSource) {
@@ -53,6 +57,15 @@ public class BoardDAOSpring extends JdbcDaoSupport{
 	}
 	
 	public List<BoardVo> getBoardList(BoardVo board) {
-		return jdbcTemplate.query(BOARD_LIST, new BoardRowMapper());
+		Object[] args = {board.getSearchKeyword()};
+		if(board.getSearchKeyword().isEmpty()) {
+			return jdbcTemplate.query(BOARD_LIST,  new BoardRowMapper());
+		}
+		if("TITLE".equals(board.getSearchCondition())) {
+			return jdbcTemplate.query(BOARD_LIST_SEARCH_BY_TITLE, args, new BoardRowMapper());
+		} else if(("CONTENT").equals(board.getSearchCondition())) {
+			return jdbcTemplate.query(BOARD_LIST_SEARCH_BY_CONTENT, args, new BoardRowMapper());
+		}
+		return null;
 	}
 }

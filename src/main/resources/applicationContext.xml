@@ -30,6 +30,8 @@
 
 	<context:component-scan base-package="polymorphism">
 	</context:component-scan>
+	<context:component-scan base-package="com.springbook.biz">
+	</context:component-scan>
 			<!-- set aop using annotation -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	<!-- set aop using xml --> 

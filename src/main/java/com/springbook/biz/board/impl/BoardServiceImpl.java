@@ -26,7 +26,6 @@ public class BoardServiceImpl implements BoardService {
 //			throw new IllegalArgumentException("0�� ���� ����� �� �����ϴ�.");
 //		}
 		boardDAO.insertBoard(vo);
-		boardDAO.insertBoard(vo);
 	}
 
 	@Override

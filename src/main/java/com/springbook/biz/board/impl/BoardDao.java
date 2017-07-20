@@ -17,7 +17,7 @@ import com.springbook.biz.common.JDBCUtil;
 
 // DAO(Dada Access Object)
 //@Component("boardDao") <-- @Repository ��ſ� ���� ����
-@Repository("boardDaoJdbc")
+@Repository("boardDao")
 public class BoardDao {
 	// JDBC ���� ����
 	private Connection conn = null;
@@ -35,13 +35,10 @@ public class BoardDao {
 	private final String BOARD_GET = "select * from board where seq=?";
 	private final String BOARD_LIST = "select * from board order by seq desc";
 	private final String BOARD_LIST_SEARCH_BY_TITLE = 
-			"select * from board where title like '%'||?||'%' order by seq desc";
+			"select * from board where title like ? order by seq desc";
 	private final String BOARD_LIST_SEARCH_BY_CONTENT =
-			"select * from board where content like '%'||?||'%' order by seq desc";
+			"select * from board where content like ? order by seq desc";
 	
-	// CRUD ����� �޼ҵ� ����
-	// �� ���
-
 	public void insertBoard(BoardVo vo) {
 		try {
 			conn = JDBCUtil.getConnection();
@@ -58,7 +55,6 @@ public class BoardDao {
 		}
 	}
 	
-	// �� ����
 	public void updateBoard(BoardVo vo) {
 		try {
 			conn = JDBCUtil.getConnection();
@@ -120,7 +116,7 @@ public class BoardDao {
 		
 		try {
 			conn = JDBCUtil.getConnection();
-			if(searchCondition == null) {
+			if(vo.getSearchKeyword().isEmpty()) {
 				sql = BOARD_LIST;
 				stmt = conn.prepareStatement(sql);
 			} else {
@@ -130,8 +126,10 @@ public class BoardDao {
 					sql = BOARD_LIST_SEARCH_BY_CONTENT;
 				}
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, vo.getSearchKeyword());
+				stmt.setString(1, "'%" + vo.getSearchKeyword() + "%'");
 			}
+			
+			System.out.println("getBoardList SQL: " + stmt.toString());
 			
 			rs = stmt.executeQuery();
 			while(rs.next()) {
