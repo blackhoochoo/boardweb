@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlTransient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // VO(Value Object)
-@XmlAccessorType(XmlAccessType.FIELD) // 현재 클래스의 인스턴스를 XML로 변환할 수 있다는 의미
+@XmlAccessorType(XmlAccessType.FIELD) 
 public class BoardVo {
-	@XmlAttribute // 해당 변수는 속성으로 취급
+	@XmlAttribute
 	private int seq;
 	private String title;
 	private String writer;
