@@ -161,4 +161,3 @@ target/classes/com/springbook/biz/board/impl/BoardDaoMybatisTemplate.class
 target/classes/com/springbook/biz/board/impl/BoardDaoMybatis.class
 target/classes/sql-map-config.xml
 target/classes/mappings/board-mapping.xml
-target/classes/com/springbook/biz/support/DispatcherServlet.class
