@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 import com.springbook.biz.board.BoardVo;
 
 // DAO(Data Access Object)
-@Repository("boardDaoSpring")
-public class BoardDAOSpring extends JdbcDaoSupport{
+@Repository
+public class BoardDaoSpring extends JdbcDaoSupport {
 	// jdbcTemplate
 	@Autowired
 	private JdbcTemplate jdbcTemplate;

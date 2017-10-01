@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.springbook.biz.board.BoardVo;
-import com.springbook.biz.board.impl.BoardDao;
+import com.springbook.biz.board.impl.BoardDaoSimple;
 import com.springbook.biz.user.User;
 import com.springbook.biz.user.impl.UserDao;
 
@@ -71,7 +71,7 @@ public class DispatcherServlet extends HttpServlet {
 			board.setWriter(writer);
 			board.setContent(content);
 			
-			BoardDao boardDao = new BoardDao();
+			BoardDaoSimple boardDao = new BoardDaoSimple();
 			boardDao.insertBoard(board);
 			
 			response.sendRedirect("getBoardList.do");
@@ -88,7 +88,7 @@ public class DispatcherServlet extends HttpServlet {
 			board.setWriter(writer);
 			board.setContent(content);
 			
-			BoardDao boardDao = new BoardDao();
+			BoardDaoSimple boardDao = new BoardDaoSimple();
 			boardDao.updateBoard(board);
 			
 			response.sendRedirect("getBoardList.do");
@@ -97,7 +97,7 @@ public class DispatcherServlet extends HttpServlet {
 			BoardVo board = new BoardVo();
 			board.setSeq(Integer.parseInt(seq));
 			
-			BoardDao boardDao = new BoardDao();
+			BoardDaoSimple boardDao = new BoardDaoSimple();
 			boardDao.deleteBoard(board);
 			
 			response.sendRedirect("getBoardList.do");
@@ -107,7 +107,7 @@ public class DispatcherServlet extends HttpServlet {
 			//1. �˻��� �Խñ� ��ȣ ����
 			String seq = request.getParameter("seq");
 			// 2. DB ���� ó��
-			BoardDao boardDao = new BoardDao();
+			BoardDaoSimple boardDao = new BoardDaoSimple();
 			BoardVo board = new BoardVo();
 			board.setSeq(Integer.parseInt(seq));
 			board = boardDao.getBoard(board);
@@ -118,7 +118,7 @@ public class DispatcherServlet extends HttpServlet {
 			response.sendRedirect("getBoard.jsp");
 		} else if("/getBoardList.do".equals(path)) {
 			BoardVo board = new BoardVo();
-			BoardDao boardDao = new BoardDao();
+			BoardDaoSimple boardDao = new BoardDaoSimple();
 			List<BoardVo> boardList = boardDao.getBoardList(board);
 			
 			// 3. 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.

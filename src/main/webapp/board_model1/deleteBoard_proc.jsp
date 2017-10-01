@@ -1,5 +1,6 @@
 <%@ page import="com.springbook.biz.board.impl.BoardDao" %>
 <%@ page import="com.springbook.biz.board.BoardVo" %>
+<%@ page import="com.springbook.biz.board.impl.BoardDaoSimple" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -10,7 +11,7 @@
 	board.setSeq(Integer.parseInt(seq));
 	
 	// 2. DB 연동 처리
-	BoardDao boardDao = new BoardDao();
+	BoardDao boardDao = new BoardDaoSimple();
 	boardDao.deleteBoard(board);
 	
 	// 3. 화면 네비게이션

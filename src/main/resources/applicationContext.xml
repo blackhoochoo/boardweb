@@ -86,6 +86,16 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+	
+	<!-- Mybatis 설정 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	<!-- 아래는 template 객체를 사용하여 dao를 만들때 사용한다 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"></constructor-arg>
+	</bean>
 	 
 	<!-- Transaction 설정 -->
 	<bean id="txManager"

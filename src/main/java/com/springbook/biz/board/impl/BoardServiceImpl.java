@@ -7,12 +7,14 @@ import com.springbook.biz.board.BoardVo;
 import com.springbook.biz.common.LogAdvice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	@Autowired
-	private BoardDao boardDAO;
+	@Qualifier("boardDaoMybatisTemplate")
+	private BoardDao boardDao;
 //	@Autowired
 //	private BoardDAOSpring boardDAO;
 
@@ -25,27 +27,27 @@ public class BoardServiceImpl implements BoardService {
 //		if(vo.getSeq() == 0) {
 //			throw new IllegalArgumentException("0�� ���� ����� �� �����ϴ�.");
 //		}
-		boardDAO.insertBoard(vo);
+		boardDao.insertBoard(vo);
 	}
 
 	@Override
 	public void updateBoard(BoardVo vo) {
-		boardDAO.updateBoard(vo);
+		boardDao.updateBoard(vo);
 	}
 
 	@Override
 	public void deleteBoard(BoardVo vo) {
-		boardDAO.deleteBoard(vo);
+		boardDao.deleteBoard(vo);
 	}
 
 	@Override
 	public BoardVo getBoard(BoardVo vo) {
-		return boardDAO.getBoard(vo);
+		return boardDao.getBoard(vo);
 	}
 
 	@Override
 	public List<BoardVo> getBoardList(BoardVo vo) {
-		return boardDAO.getBoardList(vo);
+		return boardDao.getBoardList(vo);
 	}
 
 }

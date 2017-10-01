@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardDao">
+	<resultMap type="board" id="boardResult">
+		<id property="seq" column="SEQ"/>
+		<result property="title" column="TITLE"/>
+		<result property="writer" column="WRITER"/>
+		<result property="content" column="CONTENT"/>
+		<result property="regdate" column="REGDATE"/>
+		<result property="cnt" column="CNT"/>
+	</resultMap>
+	<insert id="insertBoard" parameterType="board">
+		<selectKey keyProperty="seq" resultType="int">
+		<![CDATA[
+			SELECT b.seq FROM (SELECT IFNULL(max(seq), 0) + 1 AS seq FROM board) b
+			]]>
+		</selectKey>
+		<![CDATA[
+		INSERT INTO board(seq, title, writer, content)
+		VALUES (
+		 #{seq},
+		 #{title}, 
+		 #{writer}, 
+		 #{content} )
+		 ]]>
+	</insert>
+	<update id="updateBoard" parameterType="board">
+		<![CDATA[
+		UPDATE board SET title = #{title}, content = #{content} 
+		WHERE seq = #{seq}
+		]]>
+	</update>
+	<delete id="deleteBoard" parameterType="board">
+		<![CDATA[
+		DELETE FROM board
+		WHERE seq = #{seq}
+		]]>
+	</delete>
+	<select id="getBoard" parameterType="board" resultType="board">
+		<![CDATA[
+		SELECT * FROM board
+		WHERE seq = #{seq}
+		]]>
+	</select>
+	<select id="getBoardListByTitle" parameterType="board" resultMap="boardResult">
+		<![CDATA[
+		SELECT * FROM board
+		WHERE title like CONCAT('%',#{searchKeyword},'%')
+		ORDER BY seq desc
+		]]>
+	</select>
+	<select id="getBoardListByContent" parameterType="board" resultMap="boardResult">
+		<![CDATA[
+		SELECT * FROM board
+		WHERE content like CONCAT('%',#{searchKeyword},'%')
+		ORDER BY seq desc
+		]]>
+	</select>
+	<select id="getBoardList" parameterType="board" resultMap="boardResult">
+		<![CDATA[
+		SELECT * FROM board
+		WHERE 1 = 1
+		]]>
+		<if test="searchCondition == 'TITLE'">
+		<![CDATA[
+			AND title like CONCAT('%',#{searchKeyword},'%') 
+			]]>
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+		<![CDATA[
+			AND content like CONCAT('%',#{searchKeyword},'%') 
+			]]>
+		</if>
+		<![CDATA[
+		ORDER BY seq desc
+		]]>
+	</select>
+</mapper>

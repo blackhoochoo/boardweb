@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springbook.biz.board.BoardListVo;
 import com.springbook.biz.board.BoardService;
 import com.springbook.biz.board.BoardVo;
-import com.springbook.biz.board.impl.BoardDao;
 
 // "board"라는 이름으로 SessionAttributes를 지정한다. 추후 ModelAttribute에 값이 없는 경우 이 값에서 보충 된다.
 @SessionAttributes("board")
@@ -52,7 +51,7 @@ public class BoardController {
 
 	// 글 등록
 	@RequestMapping("/insertBoard.do")
-	public String insertBoard(BoardVo vo, BoardDao boardDao) throws IOException {
+	public String insertBoard(BoardVo vo) throws IOException {
 		MultipartFile uploadFile = vo.getUploadFile();
 		if(! vo.getUploadFile().isEmpty()) {
 			String fileName = uploadFile.getOriginalFilename();
@@ -64,7 +63,7 @@ public class BoardController {
 
 	// 글 수정
 	@RequestMapping("/updateBoard.do")
-	public String updateBoard(@ModelAttribute("board") BoardVo vo, BoardDao boardDao) {
+	public String updateBoard(@ModelAttribute("board") BoardVo vo) {
 		System.out.println("번호: " + vo.getSeq());
 		System.out.println("제목: " + vo.getTitle());
 		System.out.println("작성자이름: " + vo.getWriter());
@@ -74,14 +73,14 @@ public class BoardController {
 
 	// 글 삭제
 	@RequestMapping("deleteBoard")
-	public String deleteBoard(BoardDao boardDao, BoardVo vo) {
+	public String deleteBoard(BoardVo vo) {
 		boardService.deleteBoard(vo);
 		return "getBoardList.do";
 	}
 
 	// 글 상세조회
 	@RequestMapping
-	public String getBoard(BoardVo vo, BoardDao boardDao, Model model) {
+	public String getBoard(BoardVo vo, Model model) {
 		model.addAttribute("board", boardService.getBoard(vo));
 		return "/getBoard.jsp";
 	}
@@ -98,7 +97,7 @@ public class BoardController {
 
 	// 글 목록 검색
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(BoardVo vo, BoardDao boardDao, Model model) {
+	public String getBoardList(BoardVo vo, Model model) {
 		System.out.println("글 목록검색. " + vo);
 		// Null Check
 		if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");

@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.springbook.biz.board.impl.BoardDao" %>
+<%@ page import="com.springbook.biz.board.impl.BoardDaoSimple" %>
 <%@ page import="com.springbook.biz.board.BoardVo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,7 +9,7 @@
 	// 1. 사용자 입력 정보 추출(검색 기능은 나중에 구현)
 	// 2. DB 연동 처리
 	BoardVo board = new BoardVo();
-	BoardDao boardDao = new BoardDao();
+	BoardDao boardDao = new BoardDaoSimple();
 	List<BoardVo> boardList = boardDao.getBoardList(board);
 	
 	// 3. 응답 화면 구성
