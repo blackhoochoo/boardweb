@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+// for revert
 @XmlRootElement(name = "boardList")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BoardListVo {
